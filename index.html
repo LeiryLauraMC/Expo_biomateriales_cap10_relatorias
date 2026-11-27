@@ -567,15 +567,12 @@ svg.arrow{display:block}
 <aside>Cierre. La frase resume la idea central del capítulo. Dejar la pregunta de reflexión en el aire mientras se abren preguntas: las pistas remiten a la fagocitosis frustrada (partículas de más de 5 µm), a las especies reactivas que degradan el material y a los frenos de la inflamación, como IL-1ra. Es una pregunta abierta, sin respuesta única.</aside>
 </section>
 </div>
-<div id="bar"></div>
-<div id="help">← → para avanzar · F pantalla completa · N notas</div>
-<div id="hud"><span id="num"></span><button id="bprev" aria-label="Anterior">‹</button><button id="bnext" aria-label="Siguiente">›</button><button id="bnotes" aria-label="Notas del orador">✎</button><button id="bfs" aria-label="Pantalla completa">⛶</button></div>
 <div id="notes"></div>
 <script>
 (function(){
   var stage=document.getElementById('stage');
   var S=[].slice.call(stage.children);
-  var bar=document.getElementById('bar'), num=document.getElementById('num'), notes=document.getElementById('notes');
+  var bar={style:{}}, num={}, notes=document.getElementById('notes');
   var cur=0;
   function fit(){var s=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform='translate(-50%,-50%) scale('+s+')';}
   addEventListener('resize',fit);fit();
@@ -618,10 +615,6 @@ svg.arrow{display:block}
   addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
   addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40){dx<0?next():prev();}x0=null;});
   function toggleFs(){if(!document.fullscreenElement){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}else{document.exitFullscreen&&document.exitFullscreen();}}
-  document.getElementById('bprev').onclick=function(e){e.stopPropagation();prev();};
-  document.getElementById('bnext').onclick=function(e){e.stopPropagation();next();};
-  document.getElementById('bfs').onclick=function(e){e.stopPropagation();toggleFs();};
-  document.getElementById('bnotes').onclick=function(e){e.stopPropagation();notes.classList.toggle('on');};
   var start=parseInt((location.hash||'').slice(1),10);
   S[0].classList.add('active');cur=0;
   show(start>0&&start<=S.length?start-1:0,1,false);
